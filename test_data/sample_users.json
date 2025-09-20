@@ -1,0 +1,107 @@
+{
+  "test_users": [
+    {
+      "nickname": "Alice",
+      "user_hash": "a1b2c3d4e5f6g7h8",
+      "public_key": "alice_public_key_data",
+      "private_key": "alice_private_key_data",
+      "is_online": true,
+      "last_seen": 1640995200,
+      "key_rotation_count": 5
+    },
+    {
+      "nickname": "Bob",
+      "user_hash": "b2c3d4e5f6g7h8i9",
+      "public_key": "bob_public_key_data",
+      "private_key": "bob_private_key_data",
+      "is_online": false,
+      "last_seen": 1640991600,
+      "key_rotation_count": 3
+    },
+    {
+      "nickname": "Charlie",
+      "user_hash": "c3d4e5f6g7h8i9j0",
+      "public_key": "charlie_public_key_data",
+      "private_key": "charlie_private_key_data",
+      "is_online": true,
+      "last_seen": 1640994000,
+      "key_rotation_count": 7
+    },
+    {
+      "nickname": "David",
+      "user_hash": "d4e5f6g7h8i9j0k1",
+      "public_key": "david_public_key_data",
+      "private_key": "david_private_key_data",
+      "is_online": false,
+      "last_seen": 1640908800,
+      "key_rotation_count": 2
+    },
+    {
+      "nickname": "Eve",
+      "user_hash": "e5f6g7h8i9j0k1l2",
+      "public_key": "eve_public_key_data",
+      "private_key": "eve_private_key_data",
+      "is_online": true,
+      "last_seen": 1640995800,
+      "key_rotation_count": 4
+    }
+  ],
+  "test_groups": [
+    {
+      "group_id": "group_1",
+      "group_name": "Test Group 1",
+      "description": "A test group for testing purposes",
+      "owner_nickname": "Alice",
+      "owner_hash": "a1b2c3d4e5f6g7h8",
+      "is_private": true,
+      "member_count": 3,
+      "last_activity": 1640995200,
+      "unread_count": 2
+    },
+    {
+      "group_id": "group_2",
+      "group_name": "Project Team",
+      "description": "Team collaboration group",
+      "owner_nickname": "Bob",
+      "owner_hash": "b2c3d4e5f6g7h8i9",
+      "is_private": false,
+      "member_count": 5,
+      "last_activity": 1640991600,
+      "unread_count": 0
+    }
+  ],
+  "test_messages": [
+    {
+      "message_id": "msg_1",
+      "sender_nickname": "Alice",
+      "sender_hash": "a1b2c3d4e5f6g7h8",
+      "recipient_nickname": "Bob",
+      "recipient_hash": "b2c3d4e5f6g7h8i9",
+      "content": "Hello Bob! How are you doing?",
+      "timestamp": 1640995200,
+      "message_type": "TEXT_MESSAGE",
+      "is_encrypted": true
+    },
+    {
+      "message_id": "msg_2",
+      "sender_nickname": "Bob",
+      "sender_hash": "b2c3d4e5f6g7h8i9",
+      "recipient_nickname": "Alice",
+      "recipient_hash": "a1b2c3d4e5f6g7h8",
+      "content": "Hi Alice! I'm doing great, thanks for asking.",
+      "timestamp": 1640995260,
+      "message_type": "TEXT_MESSAGE",
+      "is_encrypted": true
+    },
+    {
+      "message_id": "msg_3",
+      "group_id": "group_1",
+      "sender_nickname": "Alice",
+      "sender_hash": "a1b2c3d4e5f6g7h8",
+      "content": "Hello everyone in the group!",
+      "timestamp": 1640995320,
+      "message_type": "GROUP_TEXT_MESSAGE",
+      "is_encrypted": true
+    }
+  ]
+}

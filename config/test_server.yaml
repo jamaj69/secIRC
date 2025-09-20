@@ -1,0 +1,47 @@
+# secIRC Test Server Configuration
+# Configuration for testing relay server functionality
+
+server:
+  host: "127.0.0.1"
+  port: 6667
+  ssl_port: 6697
+  test_mode: true
+
+network:
+  udp_port: 6667
+  max_packet_size: 1400
+  test_timeout: 30  # seconds
+
+relay:
+  discovery_interval: 10  # seconds (faster for testing)
+  sync_interval: 5        # seconds (faster for testing)
+  max_relay_hops: 3       # reduced for testing
+  bootstrap_relays:       # test relays
+    - host: "127.0.0.1"
+      port: 6668
+    - host: "127.0.0.1"
+      port: 6669
+    - host: "127.0.0.1"
+      port: 6670
+
+first_ring:
+  members: []  # empty for testing
+  consensus_threshold: 0.5  # lower for testing
+  challenge_interval: 60    # seconds (faster for testing)
+
+ring_expansion:
+  interval: 30  # seconds (faster for testing)
+  candidates: 3
+  consensus_threshold: 0.5  # lower for testing
+
+logging:
+  level: "DEBUG"  # more verbose for testing
+  file: "logs/test_server.log"
+  anonymize_ips: false  # show IPs in test logs
+
+# Test-specific settings
+test:
+  enable_mock_data: true
+  simulate_network_delay: false
+  test_data_path: "test_data/"
+  cleanup_after_tests: true

@@ -1,0 +1,41 @@
+# secIRC Test Client Configuration
+# Configuration for testing client functionality
+
+client:
+  test_mode: true
+  auto_connect: false  # manual connection for testing
+  connection_timeout: 10  # seconds
+
+network:
+  udp_port: 6667
+  max_packet_size: 1400
+  test_timeout: 30  # seconds
+
+relay:
+  discovery_interval: 10  # seconds (faster for testing)
+  max_relay_hops: 3
+  bootstrap_relays:       # test relays
+    - host: "127.0.0.1"
+      port: 6668
+    - host: "127.0.0.1"
+      port: 6669
+    - host: "127.0.0.1"
+      port: 6670
+
+key_storage:
+  path: "test_data/keys/"
+  encryption_enabled: true
+  test_keys: true  # use test keys
+
+message_cache:
+  size: 100  # reduced for testing
+  cleanup_interval: 60  # seconds
+
+# Test-specific settings
+test:
+  enable_mock_contacts: true
+  enable_mock_groups: true
+  simulate_user_input: false
+  test_data_path: "test_data/"
+  cleanup_after_tests: true
+  log_all_operations: true

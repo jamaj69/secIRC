@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Keychain Access Groups -->
+    <key>keychain-access-groups</key>
+    <array>
+        <string>$(AppIdentifierPrefix)com.secirc.ios</string>
+    </array>
+    
+    <!-- Secure Enclave -->
+    <key>com.apple.developer.secure-enclave</key>
+    <true/>
+    
+    <!-- Biometric Authentication -->
+    <key>com.apple.developer.biometric-authentication</key>
+    <true/>
+    
+    <!-- Local Authentication -->
+    <key>com.apple.developer.local-authentication</key>
+    <true/>
+    
+    <!-- Network Extensions -->
+    <key>com.apple.developer.networking.networkextension</key>
+    <array>
+        <string>packet-tunnel-provider</string>
+        <string>app-proxy-provider</string>
+    </array>
+    
+    <!-- Push Notifications -->
+    <key>aps-environment</key>
+    <string>development</string>
+    
+    <!-- Background Processing -->
+    <key>com.apple.developer.background-processing</key>
+    <array>
+        <string>com.secirc.background-sync</string>
+        <string>com.secirc.security-monitoring</string>
+    </array>
+    
+    <!-- Background App Refresh -->
+    <key>com.apple.developer.background-app-refresh</key>
+    <true/>
+    
+    <!-- Background Fetch -->
+    <key>com.apple.developer.background-fetch</key>
+    <true/>
+    
+    <!-- Remote Notifications -->
+    <key>com.apple.developer.remote-notifications</key>
+    <true/>
+    
+    <!-- File Provider -->
+    <key>com.apple.developer.fileprovider</key>
+    <true/>
+    
+    <!-- Document Provider -->
+    <key>com.apple.developer.document-provider</key>
+    <true/>
+    
+    <!-- Security Scoped Resources -->
+    <key>com.apple.security.application-groups</key>
+    <array>
+        <string>group.com.secirc.ios</string>
+    </array>
+    
+    <!-- App Transport Security -->
+    <key>com.apple.developer.networking.custom-protocol</key>
+    <true/>
+    
+    <!-- Inter-App Communication -->
+    <key>com.apple.developer.inter-app-communication</key>
+    <true/>
+    
+    <!-- HealthKit -->
+    <key>com.apple.developer.healthkit</key>
+    <false/>
+    
+    <!-- HomeKit -->
+    <key>com.apple.developer.homekit</key>
+    <false/>
+    
+    <!-- Core NFC -->
+    <key>com.apple.developer.nfc.readersession.formats</key>
+    <array>
+        <string>TAG</string>
+    </array>
+    
+    <!-- Siri -->
+    <key>com.apple.developer.siri</key>
+    <false/>
+    
+    <!-- CarPlay -->
+    <key>com.apple.developer.carplay-audio</key>
+    <false/>
+    
+    <!-- Apple Pay -->
+    <key>com.apple.developer.payment-pass-provisioning</key>
+    <false/>
+    
+    <!-- Game Center -->
+    <key>com.apple.developer.game-center</key>
+    <false/>
+    
+    <!-- CloudKit -->
+    <key>com.apple.developer.icloud-container-identifiers</key>
+    <array>
+        <string>iCloud.com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Services -->
+    <key>com.apple.developer.icloud-services</key>
+    <array>
+        <string>CloudKit</string>
+    </array>
+    
+    <!-- CloudKit Containers -->
+    <key>com.apple.developer.icloud-container-environment</key>
+    <string>Development</string>
+    
+    <!-- CloudKit Database -->
+    <key>com.apple.developer.icloud-database</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Schema -->
+    <key>com.apple.developer.icloud-schema</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Subscription -->
+    <key>com.apple.developer.icloud-subscription</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Zone -->
+    <key>com.apple.developer.icloud-zone</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Record -->
+    <key>com.apple.developer.icloud-record</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Asset -->
+    <key>com.apple.developer.icloud-asset</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Query -->
+    <key>com.apple.developer.icloud-query</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Operation -->
+    <key>com.apple.developer.icloud-operation</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Notification -->
+    <key>com.apple.developer.icloud-notification</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Error -->
+    <key>com.apple.developer.icloud-error</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Debug -->
+    <key>com.apple.developer.icloud-debug</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Test -->
+    <key>com.apple.developer.icloud-test</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Production -->
+    <key>com.apple.developer.icloud-production</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Staging -->
+    <key>com.apple.developer.icloud-staging</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+    
+    <!-- CloudKit Development -->
+    <key>com.apple.developer.icloud-development</key>
+    <array>
+        <string>com.secirc.ios</string>
+    </array>
+</dict>
+</plist>

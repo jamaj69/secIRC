@@ -1,0 +1,32 @@
+# secIRC Test Security Configuration
+# Configuration for testing security features
+
+encryption:
+  algorithm: "AES-256-GCM"
+  hash_algorithm: "SHA-256"
+  key_length: 256
+  test_mode: true  # use weaker keys for testing
+
+password_hash:
+  algorithm: "argon2"
+  iterations: 1000  # reduced for testing
+  memory: 64  # MB, reduced for testing
+  parallelism: 1
+
+session_key:
+  rotation_interval: 300  # 5 minutes for testing
+  max_age: 3600  # 1 hour for testing
+
+traffic_obfuscation:
+  level: 1  # minimal for testing
+  dummy_traffic: false  # disabled for testing
+  padding: false  # disabled for testing
+
+# Test-specific security settings
+test:
+  use_test_keys: true
+  disable_encryption: false  # still test encryption
+  allow_weak_passwords: true  # for testing
+  skip_certificate_validation: true  # for testing
+  log_encryption_operations: true
+  test_key_rotation: true

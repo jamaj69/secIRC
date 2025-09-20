@@ -1,7 +1,7 @@
 """
-PubSub Server for Group Message Distribution.
-Implements a publish-subscribe server for distributing encrypted group messages
-with proper group key management and automatic message cleanup.
+PubSub Server for Decentralized Group Message Distribution.
+Implements a publish-subscribe server for distributing individually encrypted group messages
+where groups are managed only by their owners and messages are encrypted separately for each member.
 """
 
 import asyncio
@@ -17,6 +17,7 @@ import struct
 
 from .encryption import EndToEndEncryption
 from .message_types import MessageType, Message, HashIdentity
+from .decentralized_groups import DecentralizedGroupManager, DecentralizedGroup, GroupMessage
 
 
 class PubSubEvent(Enum):
@@ -162,19 +163,16 @@ class PubSubEvent:
 
 
 class PubSubServer:
-    """PubSub server for group message distribution with group key management."""
+    """PubSub server for decentralized group message distribution."""
     
     def __init__(self, encryption: EndToEndEncryption):
         self.encryption = encryption
         
-        # Group management
-        self.groups: Dict[bytes, Dict[str, Any]] = {}  # group_id -> group info
-        self.group_subscriptions: Dict[bytes, Set[bytes]] = defaultdict(set)  # group_id -> user_ids
-        self.user_subscriptions: Dict[bytes, Set[bytes]] = defaultdict(set)  # user_id -> group_ids
+        # Decentralized group management
+        self.group_manager = DecentralizedGroupManager(encryption)
         
-        # Group key management
-        self.group_keys: Dict[bytes, List[GroupKey]] = defaultdict(list)  # group_id -> keys
-        self.active_group_keys: Dict[bytes, GroupKey] = {}  # group_id -> active key
+        # Message delivery tracking
+        self.message_delivery_status: Dict[bytes, Dict[bytes, bool]] = defaultdict(dict)  # message_id -> user_hash -> delivered
         
         # Message management
         self.pending_messages: Dict[bytes, GroupMessage] = {}  # message_id -> message
@@ -219,89 +217,36 @@ class PubSubServer:
         
         print("✅ PubSub service started")
     
-    # Group Management
+    # Group Management (Delegated to DecentralizedGroupManager)
     
-    async def create_group(self, group_id: bytes, creator_id: bytes, group_info: Dict[str, Any]) -> bool:
-        """Create a new group with initial key."""
-        try:
-            # Create group
-            self.groups[group_id] = {
-                "group_id": group_id.hex(),
-                "creator_id": creator_id.hex(),
-                "created_at": int(time.time()),
-                "member_count": 1,
-                "is_active": True,
-                **group_info
-            }
-            
-            # Add creator as first member
-            await self._add_group_member(group_id, creator_id)
-            
-            # Generate initial group key
-            await self._generate_group_key(group_id, creator_id)
-            
-            # Emit event
-            await self._emit_event(PubSubEvent.GROUP_JOINED, group_id, creator_id, None, {
-                "action": "group_created",
-                "creator_id": creator_id.hex()
-            })
-            
-            self.stats["groups_created"] += 1
-            return True
-            
-        except Exception as e:
-            print(f"❌ Failed to create group: {e}")
-            return False
+    async def create_group(self, owner_hash: bytes, owner_public_key: bytes, 
+                          group_name: str, description: str = "", 
+                          max_members: int = 100, is_private: bool = True) -> Optional[DecentralizedGroup]:
+        """Create a new group (owner only)."""
+        return await self.group_manager.create_group(
+            owner_hash, owner_public_key, group_name, description, max_members, is_private
+        )
     
-    async def join_group(self, group_id: bytes, user_id: bytes) -> bool:
-        """Join a group and receive group key."""
-        try:
-            if group_id not in self.groups:
-                print(f"❌ Group {group_id.hex()} does not exist")
-                return False
-            
-            # Add user to group
-            await self._add_group_member(group_id, user_id)
-            
-            # Generate new group key with user included
-            await self._generate_group_key(group_id, user_id)
-            
-            # Emit event
-            await self._emit_event(PubSubEvent.GROUP_JOINED, group_id, user_id, None, {
-                "action": "user_joined",
-                "user_id": user_id.hex()
-            })
-            
-            self.stats["users_subscribed"] += 1
-            return True
-            
-        except Exception as e:
-            print(f"❌ Failed to join group: {e}")
-            return False
+    async def add_group_member(self, group_id: bytes, owner_hash: bytes, 
+                              new_member_hash: bytes, new_member_public_key: bytes) -> bool:
+        """Add a member to a group (owner only)."""
+        return await self.group_manager.add_member(
+            group_id, owner_hash, new_member_hash, new_member_public_key
+        )
     
-    async def leave_group(self, group_id: bytes, user_id: bytes) -> bool:
-        """Leave a group and rotate group key."""
-        try:
-            if group_id not in self.groups:
-                return False
-            
-            # Remove user from group
-            await self._remove_group_member(group_id, user_id)
-            
-            # Rotate group key to exclude user
-            await self._rotate_group_key(group_id, user_id)
-            
-            # Emit event
-            await self._emit_event(PubSubEvent.GROUP_LEFT, group_id, user_id, None, {
-                "action": "user_left",
-                "user_id": user_id.hex()
-            })
-            
-            return True
-            
-        except Exception as e:
-            print(f"❌ Failed to leave group: {e}")
-            return False
+    async def remove_group_member(self, group_id: bytes, owner_hash: bytes, 
+                                 member_hash: bytes) -> bool:
+        """Remove a member from a group (owner only)."""
+        return await self.group_manager.remove_member(group_id, owner_hash, member_hash)
+    
+    async def join_group(self, user_hash: bytes, group_id: bytes, 
+                        group_hash: bytes, group_info: Dict) -> bool:
+        """Join a group (member)."""
+        return await self.group_manager.join_group(user_hash, group_id, group_hash, group_info)
+    
+    async def leave_group(self, user_hash: bytes, group_id: bytes) -> bool:
+        """Leave a group (member)."""
+        return await self.group_manager.leave_group(user_hash, group_id)
     
     async def _add_group_member(self, group_id: bytes, user_id: bytes) -> None:
         """Add user to group."""
@@ -409,64 +354,13 @@ class PubSubServer:
     
     # Message Publishing and Distribution
     
-    async def publish_message(self, group_id: bytes, sender_id: bytes, content: bytes) -> Optional[bytes]:
-        """Publish a message to a group."""
-        try:
-            if group_id not in self.groups:
-                print(f"❌ Group {group_id.hex()} does not exist")
-                return None
-            
-            if sender_id not in self.group_subscriptions[group_id]:
-                print(f"❌ User {sender_id.hex()} is not a member of group {group_id.hex()}")
-                return None
-            
-            # Get active group key
-            if group_id not in self.active_group_keys:
-                print(f"❌ No active key for group {group_id.hex()}")
-                return None
-            
-            group_key = self.active_group_keys[group_id]
-            
-            # Encrypt message with group key
-            encrypted_content = self.encryption.encrypt_message(content, group_key.encrypted_key)
-            
-            # Create message ID
-            message_id = hashlib.sha256(
-                group_id + sender_id + encrypted_content + str(time.time()).encode()
-            ).digest()[:16]
-            
-            # Create group message
-            group_message = GroupMessage(
-                message_id=message_id,
-                group_id=group_id,
-                sender_id=sender_id,
-                encrypted_content=encrypted_content,
-                key_id=group_key.key_id,
-                timestamp=int(time.time()),
-                ttl=self.max_message_ttl,
-                recipients=self.group_subscriptions[group_id].copy()
-            )
-            
-            # Remove sender from recipients (don't send to self)
-            group_message.recipients.discard(sender_id)
-            
-            # Store message
-            self.pending_messages[message_id] = group_message
-            self.message_queue.append(message_id)
-            
-            # Emit event
-            await self._emit_event(PubSubEvent.MESSAGE_PUBLISHED, group_id, sender_id, message_id, {
-                "action": "message_published",
-                "recipient_count": len(group_message.recipients),
-                "key_id": group_key.key_id.hex()
-            })
-            
-            self.stats["messages_published"] += 1
-            return message_id
-            
-        except Exception as e:
-            print(f"❌ Failed to publish message: {e}")
-            return None
+    async def publish_message(self, group_id: bytes, sender_hash: bytes, 
+                             sender_public_key: bytes, message_type: MessageType,
+                             content: bytes) -> Optional[bytes]:
+        """Publish a message to a group (owner only)."""
+        return await self.group_manager.send_group_message(
+            group_id, sender_hash, sender_public_key, message_type, content
+        )
     
     async def _message_delivery_loop(self) -> None:
         """Main message delivery loop."""
@@ -716,32 +610,23 @@ class PubSubServer:
         """Get pubsub server status."""
         return {
             "active": True,
-            "groups_count": len(self.groups),
-            "pending_messages": len(self.pending_messages),
-            "delivered_messages": len(self.delivered_messages),
-            "active_group_keys": len(self.active_group_keys),
-            "total_subscriptions": sum(len(subscriptions) for subscriptions in self.group_subscriptions.values())
+            "owned_groups_count": len(self.group_manager.owned_groups),
+            "total_subscriptions": sum(len(groups) for groups in self.group_manager.user_subscriptions.values()),
+            "pending_messages": len(self.group_manager.pending_messages),
+            "delivered_messages": len(self.group_manager.delivered_messages)
         }
     
-    def get_group_info(self, group_id: bytes) -> Optional[Dict]:
-        """Get group information."""
-        if group_id not in self.groups:
-            return None
-        
-        group_info = self.groups[group_id].copy()
-        group_info["members"] = [user_id.hex() for user_id in self.group_subscriptions[group_id]]
-        group_info["active_key_id"] = self.active_group_keys[group_id].key_id.hex() if group_id in self.active_group_keys else None
-        
-        return group_info
+    def get_group_info(self, group_id: bytes, owner_hash: bytes) -> Optional[Dict]:
+        """Get group information (owner only)."""
+        return self.group_manager.get_group_info(group_id, owner_hash)
     
-    def get_user_groups(self, user_id: bytes) -> List[Dict]:
+    def get_owned_groups(self, owner_hash: bytes) -> List[Dict]:
+        """Get all groups owned by a user."""
+        return self.group_manager.get_owned_groups(owner_hash)
+    
+    def get_user_groups(self, user_hash: bytes) -> List[Dict]:
         """Get groups for a user."""
-        groups = []
-        for group_id in self.user_subscriptions[user_id]:
-            group_info = self.get_group_info(group_id)
-            if group_info:
-                groups.append(group_info)
-        return groups
+        return self.group_manager.get_user_groups(user_hash)
     
     def get_message_status(self, message_id: bytes) -> Optional[Dict]:
         """Get message delivery status."""
@@ -769,12 +654,7 @@ class PubSubServer:
     def get_pubsub_stats(self) -> Dict:
         """Get pubsub statistics."""
         return {
-            **self.stats,
-            "groups_count": len(self.groups),
-            "pending_messages_count": len(self.pending_messages),
-            "delivered_messages_count": len(self.delivered_messages),
-            "active_group_keys_count": len(self.active_group_keys),
-            "total_subscriptions": sum(len(subscriptions) for subscriptions in self.group_subscriptions.values()),
+            **self.group_manager.get_group_manager_stats(),
             "event_history_size": len(self.event_history)
         }
     

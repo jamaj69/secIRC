@@ -26,6 +26,7 @@ from .relay_verification import RelayVerificationSystem, VerificationTest, Verif
 from .torrent_discovery import TorrentDiscoverySystem, RelayAnnouncement, DHTNode, TrackerResponse, DiscoveryResult
 from .pubsub_server import PubSubServer, GroupKey, GroupMessage, GroupSubscription, PubSubEvent
 from .group_encryption import GroupEncryptionSystem, GroupKeyMaterial, EncryptedGroupMessage, GroupKeyDistribution
+from .decentralized_groups import DecentralizedGroupManager, DecentralizedGroup, GroupMember, GroupRole, GroupStatus
 
 __all__ = [
     "AnonymousProtocol",
@@ -88,5 +89,10 @@ __all__ = [
     "GroupEncryptionSystem",
     "GroupKeyMaterial",
     "EncryptedGroupMessage",
-    "GroupKeyDistribution"
+    "GroupKeyDistribution",
+    "DecentralizedGroupManager",
+    "DecentralizedGroup",
+    "GroupMember",
+    "GroupRole",
+    "GroupStatus"
 ]

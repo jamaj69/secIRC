@@ -58,6 +58,7 @@ secIRC/
 │   │   ├── message_types.py         # Message structures
 │   │   ├── pubsub_server.py         # Group messaging system
 │   │   ├── group_encryption.py      # Group encryption/decryption
+│   │   ├── decentralized_groups.py  # Decentralized group management
 │   │   ├── torrent_discovery.py     # Torrent-inspired relay discovery
 │   │   ├── relay_verification.py    # Relay verification system
 │   │   ├── mesh_network.py          # Mesh network topology
@@ -69,6 +70,9 @@ secIRC/
 │   │   ├── network_monitoring.py    # Network monitoring
 │   │   └── trust_system.py          # Trust and reputation system
 │   └── security/          # Security and encryption modules
+├── clients/               # Mobile client implementations
+│   ├── android/          # Android client (Kotlin + Jetpack Compose)
+│   └── ios/              # iOS client (Swift + SwiftUI)
 ├── config/                # Configuration files
 │   ├── server.yaml        # Relay server configuration
 │   ├── client.yaml        # Client configuration
@@ -171,6 +175,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Torrent Discovery System](docs/TORRENT_DISCOVERY.md)
 - [Relay Verification System](docs/RELAY_VERIFICATION.md)
 - [Security Protection](docs/SECURITY_PROTECTION.md)
+- [Decentralized Groups](docs/DECENTRALIZED_GROUPS.md)
+
+## 📱 Mobile Clients
+
+- [Android Client](clients/android/README.md) - Android 5.0+ with Kotlin and Jetpack Compose
+- [iOS Client](clients/ios/README.md) - iOS 15.0+ with Swift and SwiftUI
+- [Mobile Clients Overview](clients/README.md) - Cross-platform mobile client documentation
 
 ## 🛡️ How It Works
 

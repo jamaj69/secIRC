@@ -1,0 +1,139 @@
+version: '3.8'
+
+services:
+  # Test Relay Server 1
+  relay-server-1:
+    build: .
+    container_name: secirc-relay-1
+    ports:
+      - "6668:6667"
+      - "6698:6697"
+    environment:
+      - SECIRC_ENV=test
+      - SECIRC_SERVER_HOST=0.0.0.0
+      - SECIRC_SERVER_PORT=6667
+      - SECIRC_SSL_PORT=6697
+      - SECIRC_DEBUG=true
+      - SECIRC_LOG_LEVEL=DEBUG
+    volumes:
+      - ./config/test_server.yaml:/app/config/server.yaml
+      - ./test_data:/app/test_data
+      - ./logs:/app/logs
+    command: ["python", "src/server/main.py"]
+    networks:
+      - secirc-test-network
+
+  # Test Relay Server 2
+  relay-server-2:
+    build: .
+    container_name: secirc-relay-2
+    ports:
+      - "6669:6667"
+      - "6699:6697"
+    environment:
+      - SECIRC_ENV=test
+      - SECIRC_SERVER_HOST=0.0.0.0
+      - SECIRC_SERVER_PORT=6667
+      - SECIRC_SSL_PORT=6697
+      - SECIRC_DEBUG=true
+      - SECIRC_LOG_LEVEL=DEBUG
+    volumes:
+      - ./config/test_server.yaml:/app/config/server.yaml
+      - ./test_data:/app/test_data
+      - ./logs:/app/logs
+    command: ["python", "src/server/main.py"]
+    networks:
+      - secirc-test-network
+
+  # Test Relay Server 3
+  relay-server-3:
+    build: .
+    container_name: secirc-relay-3
+    ports:
+      - "6670:6667"
+      - "6700:6697"
+    environment:
+      - SECIRC_ENV=test
+      - SECIRC_SERVER_HOST=0.0.0.0
+      - SECIRC_SERVER_PORT=6667
+      - SECIRC_SSL_PORT=6697
+      - SECIRC_DEBUG=true
+      - SECIRC_LOG_LEVEL=DEBUG
+    volumes:
+      - ./config/test_server.yaml:/app/config/server.yaml
+      - ./test_data:/app/test_data
+      - ./logs:/app/logs
+    command: ["python", "src/server/main.py"]
+    networks:
+      - secirc-test-network
+
+  # Test Client 1
+  test-client-1:
+    build: .
+    container_name: secirc-client-1
+    environment:
+      - SECIRC_ENV=test
+      - SECIRC_CLIENT_ID=client_1
+      - SECIRC_DEBUG=true
+      - SECIRC_LOG_LEVEL=DEBUG
+    volumes:
+      - ./config/test_client.yaml:/app/config/client.yaml
+      - ./test_data:/app/test_data
+      - ./logs:/app/logs
+    command: ["python", "scripts/test_client.py"]
+    depends_on:
+      - relay-server-1
+      - relay-server-2
+      - relay-server-3
+    networks:
+      - secirc-test-network
+
+  # Test Client 2
+  test-client-2:
+    build: .
+    container_name: secirc-client-2
+    environment:
+      - SECIRC_ENV=test
+      - SECIRC_CLIENT_ID=client_2
+      - SECIRC_DEBUG=true
+      - SECIRC_LOG_LEVEL=DEBUG
+    volumes:
+      - ./config/test_client.yaml:/app/config/client.yaml
+      - ./test_data:/app/test_data
+      - ./logs:/app/logs
+    command: ["python", "scripts/test_client.py"]
+    depends_on:
+      - relay-server-1
+      - relay-server-2
+      - relay-server-3
+    networks:
+      - secirc-test-network
+
+  # Integration Test Runner
+  integration-tests:
+    build: .
+    container_name: secirc-integration-tests
+    environment:
+      - SECIRC_ENV=test
+      - SECIRC_DEBUG=true
+      - SECIRC_LOG_LEVEL=DEBUG
+    volumes:
+      - ./config:/app/config
+      - ./test_data:/app/test_data
+      - ./logs:/app/logs
+    command: ["python", "scripts/test_integration.py"]
+    depends_on:
+      - relay-server-1
+      - relay-server-2
+      - relay-server-3
+      - test-client-1
+      - test-client-2
+    networks:
+      - secirc-test-network
+
+networks:
+  secirc-test-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
