@@ -1,4 +1,4 @@
-# secIRC Project Rules for Cursor AI
+# secIRC Cursor AI Configuration
 
 ## Project Overview
 This is a secure IRC (Internet Relay Chat) implementation with both server and client components.
@@ -67,4 +67,3 @@ scripts/             # Setup and utility scripts
 - Keep README files updated
 - Document configuration options
 - Provide clear error messages
-

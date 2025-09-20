@@ -1,4 +1,4 @@
-# secIRC - Git Ignore File
+# secIRC .gitignore
 
 # Python
 __pycache__/
@@ -18,46 +18,22 @@ parts/
 sdist/
 var/
 wheels/
-share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 MANIFEST
 
-# PyInstaller
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
-
-# Virtual environments
-.env
-.venv
-env/
+# Virtual Environment
 venv/
+env/
 ENV/
 env.bak/
 venv.bak/
 
-# IDEs
-.vscode/
+# IDE
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
 .idea/
 *.swp
 *.swo
@@ -72,46 +48,95 @@ venv.bak/
 ehthumbs.db
 Thumbs.db
 
-# Project specific
+# Logs
 logs/
 *.log
-config/local.py
-config/production.py
-data/
-uploads/
-temp/
-.cache/
 
-# Database
+# Data
+data/
+temp/
+uploads/
 *.db
 *.sqlite
 *.sqlite3
 
-# SSL Certificates
-*.pem
-*.key
-*.crt
-*.csr
-
-# Node.js (for web interface)
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.npm
-.yarn-integrity
-
-# Build outputs
-web/dist/
-web/build/
-
-# Environment files
+# Environment
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# Backup files
-*.bak
-*.backup
-*.old
+# Test coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Cursor AI specific
+.cursor/
+.cursorrules
+
+# Node.js (for web components)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Android
+*.apk
+*.aab
+.gradle/
+local.properties
+*.iml
+.idea/
+
+# iOS
+*.xcworkspace
+*.xcuserdata
+DerivedData/
+*.ipa
+
+# Temporary files
+*.tmp
+*.temp
