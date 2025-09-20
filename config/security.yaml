@@ -1,0 +1,48 @@
+# secIRC Security Configuration
+
+# Encryption Settings
+encryption:
+  algorithm: "AES-256-GCM"
+  key_size: 256
+  iv_size: 96
+  tag_size: 128
+  key_derivation: "PBKDF2"
+  iterations: 100000
+
+# TLS/SSL Settings
+tls:
+  min_version: "1.2"
+  max_version: "1.3"
+  cipher_suites:
+    - "ECDHE-RSA-AES256-GCM-SHA384"
+    - "ECDHE-RSA-AES128-GCM-SHA256"
+    - "ECDHE-RSA-CHACHA20-POLY1305"
+  require_client_cert: false
+  verify_mode: "required"
+
+# Authentication
+auth:
+  method: "password"  # password, certificate, oauth2
+  password_hash: "bcrypt"
+  salt_rounds: 12
+  session_timeout: 3600
+  max_failed_attempts: 3
+  lockout_duration: 300
+
+# Message Security
+messages:
+  encrypt_private: true
+  encrypt_channel: false
+  sign_messages: true
+  verify_signatures: true
+  max_message_length: 512
+  rate_limit: 10  # messages per second
+
+# Audit Logging
+audit:
+  enabled: true
+  log_connections: true
+  log_messages: false
+  log_commands: true
+  log_failures: true
+  retention_days: 90

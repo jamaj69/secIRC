@@ -1,0 +1,32 @@
+# secIRC Client Configuration
+
+client:
+  default_server: "localhost"
+  default_port: 6667
+  default_ssl_port: 6697
+  use_ssl: false
+  verify_ssl: true
+  timeout: 30
+  reconnect_attempts: 5
+  reconnect_delay: 5
+
+# User Settings
+user:
+  default_nick: "secIRC_user"
+  default_realname: "secIRC User"
+  default_username: "secirc"
+  auto_join_channels: []
+  auto_away_time: 300
+
+# Security
+security:
+  verify_certificates: true
+  allowed_ciphers: ["ECDHE-RSA-AES256-GCM-SHA384", "ECDHE-RSA-AES128-GCM-SHA256"]
+  min_tls_version: "1.2"
+
+# Logging
+logging:
+  level: "INFO"
+  file: "logs/client.log"
+  max_size: "5MB"
+  backup_count: 3
