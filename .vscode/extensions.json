@@ -1,0 +1,15 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.flake8",
+        "ms-python.mypy-type-checker",
+        "ms-python.black-formatter",
+        "ms-python.pylint",
+        "ms-vscode.vscode-json",
+        "redhat.vscode-yaml",
+        "ms-vscode.vscode-typescript-next",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode"
+    ]
+}
+
