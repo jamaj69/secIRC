@@ -1,0 +1,70 @@
+# secIRC Project Rules for Cursor AI
+
+## Project Overview
+This is a secure IRC (Internet Relay Chat) implementation with both server and client components.
+
+## Development Environment
+- Python 3.8+ with virtual environment in `venv/`
+- FastAPI for web API endpoints
+- SQLAlchemy for database operations
+- WebSocket support for real-time communication
+- Comprehensive security features including encryption and authentication
+
+## Code Style & Standards
+- Use Black for code formatting
+- Use Flake8 for linting
+- Use MyPy for type checking
+- Follow PEP 8 conventions
+- Use type hints for all functions and methods
+- Write comprehensive docstrings for all public functions
+
+## Project Structure
+```
+src/
+├── server/          # IRC server implementation
+├── client/          # IRC client implementation
+├── protocol/        # IRC protocol handling
+├── security/        # Security and encryption modules
+└── web/             # Web interface (if applicable)
+
+config/              # Configuration files
+tests/               # Test files
+scripts/             # Setup and utility scripts
+```
+
+## Key Dependencies
+- FastAPI: Web framework
+- SQLAlchemy: Database ORM
+- Cryptography: Encryption/decryption
+- WebSockets: Real-time communication
+- Pydantic: Data validation
+- PyJWT: JWT token handling
+
+## Development Workflow
+1. Always activate virtual environment: `source venv/bin/activate`
+2. Run tests before committing: `pytest`
+3. Format code: `black src/ tests/`
+4. Lint code: `flake8 src/ tests/`
+5. Type check: `mypy src/`
+
+## Security Considerations
+- All user data must be encrypted
+- Implement proper authentication and authorization
+- Use secure defaults for all configurations
+- Validate all input data
+- Log security events appropriately
+
+## Testing
+- Write unit tests for all modules
+- Use pytest for testing framework
+- Aim for high test coverage
+- Test both success and failure scenarios
+- Include integration tests for critical paths
+
+## Documentation
+- Document all public APIs
+- Include usage examples in docstrings
+- Keep README files updated
+- Document configuration options
+- Provide clear error messages
+

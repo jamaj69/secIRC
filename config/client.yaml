@@ -1,32 +1,159 @@
-# secIRC Client Configuration
+# secIRC Anonymous Messaging Client Configuration
 
-client:
-  default_server: "localhost"
-  default_port: 6667
-  default_ssl_port: 6697
-  use_ssl: false
-  verify_ssl: true
-  timeout: 30
-  reconnect_attempts: 5
-  reconnect_delay: 5
-
-# User Settings
+# User Configuration
 user:
-  default_nick: "secIRC_user"
-  default_realname: "secIRC User"
-  default_username: "secirc"
-  auto_join_channels: []
-  auto_away_time: 300
+  # User nickname (optional, for display purposes)
+  nickname: ""
+  
+  # Auto-generated user ID
+  user_id: "auto_generated"
+  
+  # Public key (auto-generated)
+  public_key: "auto_generated"
+  
+  # Private key (encrypted with password)
+  private_key: "auto_generated"
 
-# Security
+# Network Configuration
+network:
+  # Local UDP port (0 for random)
+  local_port: 0
+  
+  # Maximum packet size
+  max_packet_size: 1400
+  
+  # Connection timeout
+  connection_timeout: 30
+  
+  # Retry attempts
+  retry_attempts: 3
+
+# Security Configuration
 security:
-  verify_certificates: true
-  allowed_ciphers: ["ECDHE-RSA-AES256-GCM-SHA384", "ECDHE-RSA-AES128-GCM-SHA256"]
-  min_tls_version: "1.2"
+  # Password for private key encryption
+  password: ""  # Must be set by user
+  
+  # Encryption algorithm
+  encryption: "AES-256-GCM"
+  
+  # Key exchange algorithm
+  key_exchange: "RSA-2048"
+  
+  # Message signing
+  signing: "RSA-PSS"
+  
+  # Password hashing
+  password_hash: "Argon2id"
 
-# Logging
+# Relay Configuration
+relay:
+  # Maximum relay chain length
+  max_chain_length: 5
+  
+  # Message TTL (seconds)
+  message_ttl: 300
+  
+  # Relay discovery interval (seconds)
+  discovery_interval: 300
+  
+  # Maximum known relays
+  max_known_relays: 50
+
+# Discovery Configuration
+discovery:
+  # Enable DNS-based discovery
+  dns_discovery: true
+  
+  # DNS domain for discovery
+  dns_domain: "secirc.net"
+  
+  # Enable web-based discovery
+  web_discovery: true
+  
+  # Web discovery URL
+  web_discovery_url: "https://relays.secirc.net/discovery.json"
+  
+  # Bootstrap servers
+  bootstrap_servers:
+    - "relay1.secirc.net"
+    - "relay2.secirc.net"
+    - "relay3.secirc.net"
+
+# Message Configuration
+messages:
+  # Maximum message length
+  max_message_length: 1000
+  
+  # Message history size
+  history_size: 100
+  
+  # Auto-delete messages after (seconds, 0 for never)
+  auto_delete_after: 0
+  
+  # Enable message encryption
+  enable_encryption: true
+
+# UI Configuration
+ui:
+  # Theme (dark, light, auto)
+  theme: "dark"
+  
+  # Font size
+  font_size: 12
+  
+  # Show timestamps
+  show_timestamps: true
+  
+  # Show user IDs
+  show_user_ids: false
+  
+  # Auto-scroll to new messages
+  auto_scroll: true
+
+# Logging Configuration
 logging:
+  # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
   level: "INFO"
-  file: "logs/client.log"
-  max_size: "5MB"
-  backup_count: 3
+  
+  # Log file
+  log_file: "logs/client.log"
+  
+  # Maximum log file size (MB)
+  max_log_size: 50
+  
+  # Number of log files to keep
+  log_files: 3
+  
+  # Enable console logging
+  console_logging: true
+
+# Performance Configuration
+performance:
+  # Message processing threads
+  processing_threads: 2
+  
+  # Message queue size
+  queue_size: 1000
+  
+  # Batch processing size
+  batch_size: 50
+  
+  # Memory limit (MB)
+  memory_limit: 256
+
+# Privacy Configuration
+privacy:
+  # Clear message history on exit
+  clear_history_on_exit: false
+  
+  # Don't log message content
+  no_message_logging: true
+  
+  # Use random relay selection
+  random_relay_selection: true
+  
+  # Rotate relay chains periodically
+  rotate_relay_chains: true
+  
+  # Chain rotation interval (seconds)
+  chain_rotation_interval: 1800

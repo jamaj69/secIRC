@@ -1,48 +1,192 @@
 # secIRC Security Configuration
 
-# Encryption Settings
+# Encryption Configuration
 encryption:
-  algorithm: "AES-256-GCM"
-  key_size: 256
-  iv_size: 96
-  tag_size: 128
-  key_derivation: "PBKDF2"
-  iterations: 100000
+  # Symmetric encryption algorithm
+  symmetric_algorithm: "AES-256-GCM"
+  
+  # Asymmetric encryption algorithm
+  asymmetric_algorithm: "RSA-2048"
+  
+  # Key exchange algorithm
+  key_exchange: "ECDH-P256"
+  
+  # Message signing algorithm
+  signing_algorithm: "RSA-PSS"
+  
+  # Hash algorithm
+  hash_algorithm: "SHA-256"
 
-# TLS/SSL Settings
-tls:
-  min_version: "1.2"
-  max_version: "1.3"
-  cipher_suites:
-    - "ECDHE-RSA-AES256-GCM-SHA384"
-    - "ECDHE-RSA-AES128-GCM-SHA256"
-    - "ECDHE-RSA-CHACHA20-POLY1305"
-  require_client_cert: false
-  verify_mode: "required"
+# Key Management
+key_management:
+  # Key derivation function
+  kdf: "PBKDF2-HMAC-SHA256"
+  
+  # KDF iterations
+  kdf_iterations: 100000
+  
+  # Key length (bits)
+  key_length: 256
+  
+  # IV length (bytes)
+  iv_length: 16
+  
+  # Salt length (bytes)
+  salt_length: 32
 
-# Authentication
-auth:
-  method: "password"  # password, certificate, oauth2
-  password_hash: "bcrypt"
-  salt_rounds: 12
-  session_timeout: 3600
-  max_failed_attempts: 3
-  lockout_duration: 300
+# Password Security
+password_security:
+  # Password hashing algorithm
+  hash_algorithm: "Argon2id"
+  
+  # Argon2 parameters
+  argon2:
+    time_cost: 3
+    memory_cost: 65536  # 64 MB
+    parallelism: 4
+    hash_length: 32
+  
+  # Minimum password length
+  min_password_length: 12
+  
+  # Password complexity requirements
+  require_uppercase: true
+  require_lowercase: true
+  require_numbers: true
+  require_symbols: true
 
 # Message Security
-messages:
-  encrypt_private: true
-  encrypt_channel: false
-  sign_messages: true
-  verify_signatures: true
-  max_message_length: 512
-  rate_limit: 10  # messages per second
+message_security:
+  # Message authentication
+  enable_mac: true
+  
+  # Message integrity check
+  enable_integrity_check: true
+  
+  # Replay attack protection
+  enable_replay_protection: true
+  
+  # Message timestamp validation
+  enable_timestamp_validation: true
+  
+  # Maximum message age (seconds)
+  max_message_age: 300
 
-# Audit Logging
-audit:
-  enabled: true
-  log_connections: true
-  log_messages: false
-  log_commands: true
-  log_failures: true
-  retention_days: 90
+# Relay Security
+relay_security:
+  # Relay authentication
+  enable_relay_auth: true
+  
+  # Relay reputation system
+  enable_reputation: true
+  
+  # Minimum relay reputation
+  min_relay_reputation: 0.3
+  
+  # Relay session encryption
+  enable_session_encryption: true
+  
+  # Session key rotation interval (seconds)
+  session_rotation_interval: 3600
+
+# Network Security
+network_security:
+  # Enable DDoS protection
+  enable_ddos_protection: true
+  
+  # Maximum connections per IP
+  max_connections_per_ip: 10
+  
+  # Connection rate limiting
+  connection_rate_limit: 100  # per minute
+  
+  # Packet size limits
+  max_packet_size: 1400
+  
+  # Enable traffic analysis resistance
+  enable_traffic_analysis_resistance: true
+
+# Anonymity Features
+anonymity:
+  # Enable message padding
+  enable_message_padding: true
+  
+  # Random padding size (bytes)
+  padding_size_range: [0, 100]
+  
+  # Enable dummy traffic
+  enable_dummy_traffic: true
+  
+  # Dummy traffic interval (seconds)
+  dummy_traffic_interval: 30
+  
+  # Enable relay chain randomization
+  enable_chain_randomization: true
+  
+  # Minimum relay chain length
+  min_chain_length: 2
+  
+  # Maximum relay chain length
+  max_chain_length: 5
+
+# Cryptographic Protocols
+crypto_protocols:
+  # Enable perfect forward secrecy
+  enable_pfs: true
+  
+  # Key rotation interval (seconds)
+  key_rotation_interval: 86400  # 24 hours
+  
+  # Enable post-quantum cryptography
+  enable_pqc: false  # Future feature
+  
+  # Enable zero-knowledge proofs
+  enable_zkp: false  # Future feature
+
+# Security Monitoring
+security_monitoring:
+  # Enable intrusion detection
+  enable_ids: true
+  
+  # Log security events
+  log_security_events: true
+  
+  # Security event log file
+  security_log_file: "logs/security.log"
+  
+  # Enable anomaly detection
+  enable_anomaly_detection: true
+  
+  # Anomaly detection threshold
+  anomaly_threshold: 0.8
+
+# Compliance and Auditing
+compliance:
+  # Enable audit logging
+  enable_audit_logging: true
+  
+  # Audit log file
+  audit_log_file: "logs/audit.log"
+  
+  # Log retention period (days)
+  log_retention_days: 90
+  
+  # Enable compliance reporting
+  enable_compliance_reporting: false
+
+# Threat Model
+threat_model:
+  # Protected against passive adversaries
+  passive_adversaries: true
+  
+  # Protected against active adversaries
+  active_adversaries: true
+  
+  # Protected against global adversaries
+  global_adversaries: false  # Requires Tor integration
+  
+  # Protected against timing attacks
+  timing_attacks: true
+  
+  # Protected against traffic analysis
+  traffic_analysis: true

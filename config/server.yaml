@@ -1,41 +1,117 @@
-# secIRC Server Configuration
+# secIRC Anonymous Messaging Server Configuration
 
-server:
-  host: "0.0.0.0"
-  port: 6667
-  ssl_port: 6697
+# Network Configuration
+network:
+  # UDP port for anonymous messaging
+  udp_port: 6667
+  
+  # Maximum packet size (UDP MTU)
+  max_packet_size: 1400
+  
+  # Connection timeout
+  connection_timeout: 30
+  
+  # Maximum concurrent connections
   max_connections: 1000
-  timeout: 300
 
-# IRC Configuration
-irc:
-  server_name: "secIRC"
-  server_info: "Secure IRC Server"
-  max_nick_length: 30
-  max_channel_length: 50
-  max_topic_length: 307
-  max_kick_reason_length: 160
-  max_away_length: 160
+# Relay Server Configuration
+relay:
+  # Server identity
+  server_id: "auto_generated"  # Will be generated on first run
+  
+  # Public key for encryption
+  public_key: "auto_generated"  # Will be generated on first run
+  
+  # Private key (encrypted with server password)
+  private_key: "auto_generated"  # Will be generated on first run
+  
+  # Server reputation (0.0 to 1.0)
+  initial_reputation: 1.0
+  
+  # Maximum relay chain length
+  max_chain_length: 5
+  
+  # Message TTL (seconds)
+  message_ttl: 300
 
-# Security Settings
+# Security Configuration
 security:
-  require_ssl: false
-  require_auth: true
-  max_login_attempts: 3
-  login_timeout: 30
-  password_min_length: 8
-  enable_audit_log: true
+  # Encryption algorithm
+  encryption: "AES-256-GCM"
+  
+  # Key exchange algorithm
+  key_exchange: "RSA-2048"
+  
+  # Message signing
+  signing: "RSA-PSS"
+  
+  # Password hashing
+  password_hash: "Argon2id"
+  
+  # Session timeout
+  session_timeout: 3600
 
-# Channel Settings
-channels:
-  default_modes: "+nt"
-  max_channels_per_user: 10
-  max_users_per_channel: 100
+# Discovery Configuration
+discovery:
+  # Enable DNS-based discovery
+  dns_discovery: true
+  
+  # DNS domain for discovery
+  dns_domain: "secirc.net"
+  
+  # Enable web-based discovery
+  web_discovery: true
+  
+  # Web discovery URL
+  web_discovery_url: "https://relays.secirc.net/discovery.json"
+  
+  # Discovery interval (seconds)
+  discovery_interval: 300
+  
+  # Maximum known relays
+  max_known_relays: 100
 
-# Logging
+# Logging Configuration
 logging:
+  # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
   level: "INFO"
-  file: "logs/server.log"
-  max_size: "10MB"
-  backup_count: 5
-  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  
+  # Log file
+  log_file: "logs/relay_server.log"
+  
+  # Maximum log file size (MB)
+  max_log_size: 100
+  
+  # Number of log files to keep
+  log_files: 5
+  
+  # Enable console logging
+  console_logging: true
+
+# Performance Configuration
+performance:
+  # Worker threads
+  worker_threads: 4
+  
+  # Message queue size
+  queue_size: 10000
+  
+  # Batch processing size
+  batch_size: 100
+  
+  # Memory limit (MB)
+  memory_limit: 512
+
+# Monitoring Configuration
+monitoring:
+  # Enable metrics collection
+  enable_metrics: true
+  
+  # Metrics port
+  metrics_port: 9090
+  
+  # Health check endpoint
+  health_check: true
+  
+  # Statistics collection interval
+  stats_interval: 60

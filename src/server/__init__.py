@@ -1,5 +1,9 @@
 """
-IRC Server Implementation
+secIRC Server Module
 
-This module contains the IRC server implementation with security enhancements.
+Relay server implementation for anonymous messaging.
 """
+
+from .relay_server import RelayServer
+
+__all__ = ["RelayServer"]
