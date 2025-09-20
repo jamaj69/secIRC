@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>secIRC - Anonymous Censorship-Resistant Messaging</title>
+    <meta name="description" content="secIRC is a completely anonymous, censorship-resistant messaging system using UDP with relay servers. End-to-end encrypted with no metadata storage.">
+    <meta name="keywords" content="anonymous messaging, censorship resistant, encrypted chat, secure communication, privacy, IRC, UDP, relay servers">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1>secIRC</h1>
+                    <span class="tagline">Anonymous • Secure • Censorship-Resistant</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#download">Download</a></li>
+                    <li><a href="#documentation">Docs</a></li>
+                    <li><a href="#github" class="github-link">GitHub</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Anonymous Censorship-Resistant Messaging</h1>
+                    <p class="hero-description">
+                        secIRC is a completely anonymous messaging system that bypasses any kind of censorship 
+                        through its distributed relay network. Messages are end-to-end encrypted and relay servers 
+                        don't store metadata about origin or destination.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#download" class="btn btn-primary">Get Started</a>
+                        <a href="#github" class="btn btn-secondary">View on GitHub</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="network-diagram">
+                        <div class="node user1">User A</div>
+                        <div class="node relay1">Relay 1</div>
+                        <div class="node relay2">Relay 2</div>
+                        <div class="node relay3">Relay 3</div>
+                        <div class="node user2">User B</div>
+                        <div class="connection"></div>
+                        <div class="connection"></div>
+                        <div class="connection"></div>
+                        <div class="connection"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title">Why secIRC?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <h3>End-to-End Encryption</h3>
+                        <p>Messages are encrypted with recipient's public key. Only the recipient can decrypt with their private key.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👻</div>
+                        <h3>Complete Anonymity</h3>
+                        <p>Users, groups, and relays are known only by cryptographic hashes. No real identities are exposed.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>Censorship Resistant</h3>
+                        <p>Distributed relay network with no single point of failure. Messages route through random chains.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Cross-Platform</h3>
+                        <p>Available for Android, iOS, and desktop. Modern UI inspired by WhatsApp and IRC clients.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔑</div>
+                        <h3>Secure Key Management</h3>
+                        <p>Password-protected private keys with automatic rotation. Hardware security module support.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Torrent Discovery</h3>
+                        <p>Uses BitTorrent-inspired DHT and trackers to discover relay servers automatically.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="how-it-works">
+            <div class="container">
+                <h2 class="section-title">How It Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Generate Identity</h3>
+                            <p>Create a cryptographic keypair and generate a unique hash identifier. No personal information required.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Discover Relays</h3>
+                            <p>Use BitTorrent-inspired DHT and trackers to find relay servers in the distributed network.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Send Messages</h3>
+                            <p>Encrypt messages with recipient's public key and route through random relay chains.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Receive & Decrypt</h3>
+                            <p>Only the recipient can decrypt messages using their private key. Relays never see the content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download">
+            <div class="container">
+                <h2 class="section-title">Download secIRC</h2>
+                <div class="download-grid">
+                    <div class="download-card">
+                        <div class="download-icon">🤖</div>
+                        <h3>Android</h3>
+                        <p>Android 5.0+ with Kotlin and Jetpack Compose</p>
+                        <a href="#github" class="btn btn-primary">Download APK</a>
+                    </div>
+                    <div class="download-card">
+                        <div class="download-icon">🍎</div>
+                        <h3>iOS</h3>
+                        <p>iOS 15.0+ with Swift and SwiftUI</p>
+                        <a href="#github" class="btn btn-primary">Download IPA</a>
+                    </div>
+                    <div class="download-card">
+                        <div class="download-icon">💻</div>
+                        <h3>Desktop</h3>
+                        <p>Python-based server and client</p>
+                        <a href="#github" class="btn btn-primary">Download Source</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="documentation" class="documentation">
+            <div class="container">
+                <h2 class="section-title">Documentation</h2>
+                <div class="docs-grid">
+                    <div class="doc-card">
+                        <h3>📖 User Manual</h3>
+                        <p>Complete guide for end users</p>
+                        <a href="#github" class="doc-link">Read Manual →</a>
+                    </div>
+                    <div class="doc-card">
+                        <h3>🔧 Developer Guide</h3>
+                        <p>Technical documentation for developers</p>
+                        <a href="#github" class="doc-link">Read Guide →</a>
+                    </div>
+                    <div class="doc-card">
+                        <h3>🏗️ Architecture</h3>
+                        <p>System architecture and design</p>
+                        <a href="#github" class="doc-link">View Architecture →</a>
+                    </div>
+                    <div class="doc-card">
+                        <h3>🔒 Security Model</h3>
+                        <p>Security features and threat model</p>
+                        <a href="#github" class="doc-link">Read Security →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="github" class="github-section">
+            <div class="container">
+                <h2 class="section-title">Open Source</h2>
+                <div class="github-content">
+                    <div class="github-info">
+                        <h3>Contribute to secIRC</h3>
+                        <p>secIRC is open source and welcomes contributions from the community. Help us build a more private and censorship-resistant internet.</p>
+                        <div class="github-stats">
+                            <div class="stat">
+                                <span class="stat-number">62</span>
+                                <span class="stat-label">Files</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">18K+</span>
+                                <span class="stat-label">Lines of Code</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">MIT</span>
+                                <span class="stat-label">License</span>
+                            </div>
+                        </div>
+                        <a href="https://github.com/jamaj69/secIRC" class="btn btn-primary github-btn" target="_blank" rel="noopener noreferrer">
+                            <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            View on GitHub
+                        </a>
+                    </div>
+                    <div class="github-visual">
+                        <div class="code-preview">
+                            <div class="code-header">
+                                <div class="code-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                <span class="code-title">secIRC Protocol</span>
+                            </div>
+                            <div class="code-content">
+                                <pre><code># Anonymous messaging with end-to-end encryption
+async def send_anonymous_message(
+    recipient_hash: bytes,
+    content: bytes,
+    sender_private_key: bytes
+) -> bool:
+    # Encrypt with recipient's public key
+    encrypted_content = encrypt_message(
+        content, 
+        get_public_key(recipient_hash)
+    )
+    
+    # Route through random relay chain
+    relay_chain = select_random_relays(3)
+    return await route_message(
+        encrypted_content, 
+        relay_chain
+    )</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>secIRC</h3>
+                    <p>Anonymous Censorship-Resistant Messaging System</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="https://github.com/jamaj69/secIRC" target="_blank" rel="noopener noreferrer">GitHub Repository</a></li>
+                        <li><a href="#documentation">Documentation</a></li>
+                        <li><a href="#download">Download</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="https://github.com/jamaj69/secIRC/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#security">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 secIRC. Open source under MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

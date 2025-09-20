@@ -162,6 +162,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
+- **[🌐 Official Website](https://www.secirc.org)** - Main project page
 - [Complete Documentation](docs/README.md)
 - [System Architecture](docs/ARCHITECTURE.md)
 - [API Reference](docs/API.md)

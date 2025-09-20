@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.secirc.org/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
