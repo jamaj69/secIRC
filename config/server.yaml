@@ -1,0 +1,41 @@
+# secIRC Server Configuration
+
+server:
+  host: "0.0.0.0"
+  port: 6667
+  ssl_port: 6697
+  max_connections: 1000
+  timeout: 300
+
+# IRC Configuration
+irc:
+  server_name: "secIRC"
+  server_info: "Secure IRC Server"
+  max_nick_length: 30
+  max_channel_length: 50
+  max_topic_length: 307
+  max_kick_reason_length: 160
+  max_away_length: 160
+
+# Security Settings
+security:
+  require_ssl: false
+  require_auth: true
+  max_login_attempts: 3
+  login_timeout: 30
+  password_min_length: 8
+  enable_audit_log: true
+
+# Channel Settings
+channels:
+  default_modes: "+nt"
+  max_channels_per_user: 10
+  max_users_per_channel: 100
+
+# Logging
+logging:
+  level: "INFO"
+  file: "logs/server.log"
+  max_size: "10MB"
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
