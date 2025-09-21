@@ -1,0 +1,118 @@
+# secIRC Relay Connection Configuration
+# Configuration for multi-protocol relay server connections
+
+connection_manager:
+  # Connection limits
+  max_connections: 10          # Maximum number of relay connections
+  min_connections: 3           # Minimum number of relay connections
+  connection_timeout: 30       # Connection timeout in seconds
+  heartbeat_interval: 60       # Heartbeat interval in seconds
+  reconnect_interval: 30       # Reconnect interval in seconds
+  max_retry_attempts: 3        # Maximum retry attempts per connection
+  retry_delay: 30              # Delay between retry attempts in seconds
+
+  # Protocol settings
+  enable_tcp: true             # Enable TCP connections
+  enable_tor: true             # Enable Tor protocol connections
+  enable_websocket: true       # Enable WebSocket connections
+
+  # Port configurations
+  tcp_port: 6667               # Default TCP port for relay connections
+  websocket_port: 8080         # Default WebSocket port
+  tor_socks_port: 9050         # Tor SOCKS proxy port
+
+  # SSL/TLS settings
+  ssl_enabled: true            # Enable SSL/TLS encryption
+  ssl_cert_path: "config/ssl/relay.crt"    # SSL certificate path
+  ssl_key_path: "config/ssl/relay.key"     # SSL private key path
+  ssl_verify_certificates: false           # Verify SSL certificates (false for self-signed)
+
+# Connection priority levels (1-10, higher is better)
+priority_levels:
+  first_ring: 10               # First ring relay servers
+  trusted_relays: 8            # Trusted relay servers
+  verified_relays: 6           # Verified relay servers
+  discovered_relays: 4         # Newly discovered relays
+  untrusted_relays: 2          # Untrusted relays
+
+# Connection quality thresholds
+quality_thresholds:
+  min_latency: 1000            # Maximum acceptable latency in milliseconds
+  min_bandwidth: 1024          # Minimum bandwidth in KB/s
+  max_connection_attempts: 5   # Maximum connection attempts before giving up
+  connection_stability_time: 300  # Time in seconds to consider connection stable
+
+# Tor configuration
+tor:
+  enabled: true
+  socks_host: "127.0.0.1"      # Tor SOCKS proxy host
+  socks_port: 9050             # Tor SOCKS proxy port
+  control_host: "127.0.0.1"    # Tor control host
+  control_port: 9051           # Tor control port
+  control_password: ""         # Tor control password (if required)
+  circuit_timeout: 60          # Tor circuit timeout in seconds
+  max_circuit_dirtiness: 600   # Maximum circuit dirtiness in seconds
+
+# WebSocket configuration
+websocket:
+  enabled: true
+  ping_interval: 30            # WebSocket ping interval in seconds
+  ping_timeout: 10             # WebSocket ping timeout in seconds
+  max_message_size: 1048576    # Maximum WebSocket message size (1MB)
+  compression_enabled: true    # Enable WebSocket compression
+
+# Connection monitoring
+monitoring:
+  enable_connection_logging: true    # Log connection events
+  enable_performance_monitoring: true # Monitor connection performance
+  log_level: "INFO"                 # Logging level (DEBUG, INFO, WARNING, ERROR)
+  performance_metrics_interval: 60  # Performance metrics collection interval
+
+# Connection discovery
+discovery:
+  # Bootstrap relays for initial connection discovery
+  bootstrap_relays:
+    - relay_id: "bootstrap1"
+      connection_type: "tcp"
+      host: "relay1.secirc.net"
+      port: 6667
+      priority: 10
+    - relay_id: "bootstrap2"
+      connection_type: "websocket"
+      host: "relay2.secirc.net"
+      port: 8080
+      priority: 10
+    - relay_id: "bootstrap3"
+      connection_type: "tor"
+      host: "relay3.onion"
+      port: 6667
+      priority: 10
+
+  # Connection discovery methods
+  enable_dht_discovery: true        # Enable DHT-based discovery
+  enable_tracker_discovery: true    # Enable tracker-based discovery
+  enable_peer_exchange: true        # Enable peer exchange
+  discovery_interval: 300           # Discovery interval in seconds
+
+# Connection security
+security:
+  enable_connection_encryption: true    # Encrypt all connections
+  enable_connection_authentication: true # Authenticate all connections
+  connection_key_rotation_interval: 3600 # Key rotation interval in seconds
+  enable_connection_verification: true   # Verify connection integrity
+  max_unauthenticated_connections: 2     # Maximum unauthenticated connections
+
+# Connection load balancing
+load_balancing:
+  enable_load_balancing: true       # Enable connection load balancing
+  balance_by_latency: true          # Balance connections by latency
+  balance_by_bandwidth: true        # Balance connections by bandwidth
+  balance_by_priority: true         # Balance connections by priority
+  rebalance_interval: 300           # Rebalancing interval in seconds
+
+# Connection failover
+failover:
+  enable_automatic_failover: true   # Enable automatic failover
+  failover_timeout: 30              # Failover timeout in seconds
+  backup_connection_count: 2        # Number of backup connections to maintain
+  failover_retry_interval: 60       # Failover retry interval in seconds
