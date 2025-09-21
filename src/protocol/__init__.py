@@ -29,6 +29,14 @@ from .group_encryption import GroupEncryptionSystem, GroupKeyMaterial, Encrypted
 from .decentralized_groups import DecentralizedGroupManager, DecentralizedGroup, GroupMember, GroupRole, GroupStatus
 from .relay_connections import RelayConnectionManager, ConnectionConfig, ConnectionType, ConnectionStatus, RelayConnection
 from .tor_integration import TorIntegration, TorConfig, TorMethod, TorConnection
+from .authentication import (
+    AuthenticationProtocol, AuthenticationSession, AuthenticationStatus,
+    ChallengeType, AuthenticationChallenge, AuthenticationResponse
+)
+from .user_status import (
+    UserStatusManager, UserPresence, UserStatus, MessageDeliveryManager,
+    PendingMessage, MessageDeliveryStatus
+)
 
 __all__ = [
     "AnonymousProtocol",
@@ -105,5 +113,17 @@ __all__ = [
     "TorIntegration",
     "TorConfig",
     "TorMethod",
-    "TorConnection"
+    "TorConnection",
+    "AuthenticationProtocol",
+    "AuthenticationSession",
+    "AuthenticationStatus",
+    "ChallengeType",
+    "AuthenticationChallenge",
+    "AuthenticationResponse",
+    "UserStatusManager",
+    "UserPresence",
+    "UserStatus",
+    "MessageDeliveryManager",
+    "PendingMessage",
+    "MessageDeliveryStatus"
 ]
