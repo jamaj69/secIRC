@@ -23,6 +23,7 @@ import logging
 
 from .message_types import MessageType, Message, HashIdentity
 from .encryption import EndToEndEncryption
+from .tor_integration import TorIntegration, TorConfig, TorMethod
 
 
 class ConnectionType(Enum):
@@ -150,6 +151,18 @@ class RelayConnectionManager:
         if config.ssl_enabled:
             self.ssl_context = self._create_ssl_context()
         
+        # Tor integration
+        self.tor_integration: Optional[TorIntegration] = None
+        if config.enable_tor:
+            tor_config = TorConfig(
+                method=TorMethod.PYSOCKS,  # Default to PySocks
+                socks_host="127.0.0.1",
+                socks_port=config.tor_port,
+                enable_ip_rotation=True,
+                ip_rotation_interval=300
+            )
+            self.tor_integration = TorIntegration(tor_config)
+        
         self.logger = logging.getLogger(__name__)
     
     def _create_ssl_context(self) -> ssl.SSLContext:
@@ -169,6 +182,14 @@ class RelayConnectionManager:
     async def start_connection_manager(self) -> None:
         """Start the connection manager and background tasks."""
         self.logger.info("Starting relay connection manager...")
+        
+        # Initialize Tor integration if enabled
+        if self.tor_integration:
+            tor_success = await self.tor_integration.initialize()
+            if tor_success:
+                self.logger.info("Tor integration initialized successfully")
+            else:
+                self.logger.warning("Tor integration initialization failed")
         
         # Start background tasks
         self.heartbeat_task = asyncio.create_task(self._heartbeat_loop())
@@ -193,6 +214,10 @@ class RelayConnectionManager:
         # Cancel connection tasks
         for task in self.connection_tasks.values():
             task.cancel()
+        
+        # Cleanup Tor integration
+        if self.tor_integration:
+            await self.tor_integration.cleanup()
         
         self.logger.info("Relay connection manager stopped")
     
@@ -323,24 +348,34 @@ class RelayConnectionManager:
             raise Exception(f"TCP connection failed: {e}")
     
     async def _connect_tor(self, connection: RelayConnection) -> None:
-        """Connect via Tor SOCKS proxy."""
+        """Connect via Tor using the Tor integration module."""
         try:
-            # Create SOCKS connection through Tor
-            import socks
+            if not self.tor_integration:
+                raise Exception("Tor integration not available")
             
-            # Create socket
-            sock = socks.socksocket()
-            sock.set_proxy(socks.SOCKS5, "127.0.0.1", self.config.tor_port)
+            # Create Tor connection
+            connection_id = f"relay_{connection.relay_id.hex()}"
+            tor_connection = await self.tor_integration.create_connection(connection_id)
+            if not tor_connection:
+                raise Exception("Failed to create Tor connection")
             
-            # Connect to target
-            sock.connect((connection.host, connection.port))
+            # Connect through Tor
+            sock = await self.tor_integration.connect_through_tor(
+                connection_id, connection.host, connection.port
+            )
+            if not sock:
+                raise Exception("Failed to connect through Tor")
             
             # Convert to asyncio stream
             reader, writer = await asyncio.open_connection(sock=sock)
             connection.connection = (reader, writer)
             
-        except ImportError:
-            raise Exception("PySocks library required for Tor connections")
+            # Verify Tor connection if enabled
+            if self.tor_integration.config.enable_circuit_verification:
+                is_tor = await self.tor_integration.verify_tor_connection(connection_id)
+                if not is_tor:
+                    self.logger.warning(f"Tor verification failed for {connection_id}")
+            
         except Exception as e:
             raise Exception(f"Tor connection failed: {e}")
     

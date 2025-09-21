@@ -27,6 +27,8 @@ from .torrent_discovery import TorrentDiscoverySystem, RelayAnnouncement, DHTNod
 from .pubsub_server import PubSubServer, GroupKey, GroupMessage, GroupSubscription, PubSubEvent
 from .group_encryption import GroupEncryptionSystem, GroupKeyMaterial, EncryptedGroupMessage, GroupKeyDistribution
 from .decentralized_groups import DecentralizedGroupManager, DecentralizedGroup, GroupMember, GroupRole, GroupStatus
+from .relay_connections import RelayConnectionManager, ConnectionConfig, ConnectionType, ConnectionStatus, RelayConnection
+from .tor_integration import TorIntegration, TorConfig, TorMethod, TorConnection
 
 __all__ = [
     "AnonymousProtocol",
@@ -94,5 +96,14 @@ __all__ = [
     "DecentralizedGroup",
     "GroupMember",
     "GroupRole",
-    "GroupStatus"
+    "GroupStatus",
+    "RelayConnectionManager",
+    "ConnectionConfig",
+    "ConnectionType",
+    "ConnectionStatus",
+    "RelayConnection",
+    "TorIntegration",
+    "TorConfig",
+    "TorMethod",
+    "TorConnection"
 ]

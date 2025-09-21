@@ -47,3 +47,14 @@ scapy>=2.5.0  # For network packet analysis
 
 # Torrent Protocol Support
 bencodepy>=2.0.0  # For BitTorrent bencode support
+
+# Relay Connection Support
+websockets>=11.0.0  # WebSocket support for relay connections
+PySocks>=1.7.1      # SOCKS proxy support for Tor connections
+PyYAML>=6.0.0       # YAML configuration file support
+
+# Tor Protocol Support
+tor-proxy>=0.1.0    # Transparent Tor proxy integration
+torpy>=1.1.0        # Pure Python Tor protocol implementation
+stem>=1.8.0         # Tor controller library for advanced Tor management
+txtorcon>=22.0.0    # Twisted-based Tor controller
