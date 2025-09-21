@@ -1,6 +1,6 @@
 # secIRC - Anonymous Censorship-Resistant Messaging System
 
-A completely anonymous, censorship-resistant messaging system using UDP with relay servers. Messages are end-to-end encrypted and relay servers don't store metadata about origin or destination. The system can bypass any kind of censorship through its distributed relay network.
+A completely anonymous, censorship-resistant messaging system with separated client-server architecture. Features multi-challenge authentication, end-to-end encryption, and distributed relay network. Messages are encrypted and relay servers don't store metadata about origin or destination. The system can bypass any kind of censorship through its distributed relay network with transparent Tor integration.
 
 ## 🚀 Quick Start
 
@@ -31,9 +31,12 @@ cp .env.example .env  # Edit as needed
 ## 🛠️ Development
 
 ### Available Commands
-- **Start Relay Server**: `python src/server/main.py`
-- **Start Anonymous Client**: `python src/client/main.py`
-- **Run Tests**: `pytest`
+- **Start secIRC Server**: `python src/server/secirc_server.py`
+- **Start secIRC Client**: `python src/client/secirc_client.py`
+- **Test Authentication Flow**: `python scripts/test_client_server_auth.py`
+- **Test Relay Connections**: `python scripts/test_relay_connections.py`
+- **Test Tor Integration**: `python scripts/test_tor_integration.py`
+- **Run All Tests**: `pytest`
 - **Format Code**: `black src/ tests/`
 - **Lint Code**: `flake8 src/ tests/`
 - **Type Check**: `mypy src/`
@@ -49,36 +52,43 @@ The project includes comprehensive VS Code/Cursor configuration:
 ```
 secIRC/
 ├── src/                    # Source code
-│   ├── server/            # Relay server implementation
-│   ├── client/            # Anonymous client implementation
-│   ├── protocol/          # Anonymous messaging protocol
-│   │   ├── anonymous_protocol.py    # Main protocol handler
-│   │   ├── encryption.py            # End-to-end encryption
-│   │   ├── relay_discovery.py       # Relay server discovery
-│   │   ├── message_types.py         # Message structures
-│   │   ├── pubsub_server.py         # Group messaging system
-│   │   ├── group_encryption.py      # Group encryption/decryption
-│   │   ├── decentralized_groups.py  # Decentralized group management
-│   │   ├── torrent_discovery.py     # Torrent-inspired relay discovery
-│   │   ├── relay_verification.py    # Relay verification system
-│   │   ├── mesh_network.py          # Mesh network topology
-│   │   ├── ring_management.py       # First ring management
-│   │   ├── key_rotation.py          # Key rotation system
-│   │   ├── salt_protection.py       # Message integrity protection
-│   │   ├── anti_mitm.py             # Anti-MITM protection
-│   │   ├── relay_authentication.py  # Relay authentication
-│   │   ├── network_monitoring.py    # Network monitoring
-│   │   └── trust_system.py          # Trust and reputation system
+│   ├── server/            # secIRC server implementation
+│   │   └── secirc_server.py        # Main server with authentication
+│   ├── client/            # secIRC client implementation
+│   │   └── secirc_client.py        # Main client with authentication
+│   ├── protocol/          # Shared protocol implementations
+│   │   ├── authentication.py       # Multi-challenge authentication
+│   │   ├── user_status.py          # User status and message delivery
+│   │   ├── relay_connections.py    # Multi-protocol relay connections
+│   │   ├── tor_integration.py      # Transparent Tor proxy integration
+│   │   ├── encryption.py           # End-to-end encryption
+│   │   ├── message_types.py        # Message structures
+│   │   ├── pubsub_server.py        # Group messaging system
+│   │   ├── decentralized_groups.py # Decentralized group management
+│   │   ├── torrent_discovery.py    # Torrent-inspired relay discovery
+│   │   ├── relay_verification.py   # Relay verification system
+│   │   ├── mesh_network.py         # Mesh network topology
+│   │   ├── ring_management.py      # First ring management
+│   │   ├── key_rotation.py         # Key rotation system
+│   │   ├── salt_protection.py      # Message integrity protection
+│   │   ├── anti_mitm.py            # Anti-MITM protection
+│   │   ├── relay_authentication.py # Relay authentication
+│   │   ├── network_monitoring.py   # Network monitoring
+│   │   └── trust_system.py         # Trust and reputation system
 │   └── security/          # Security and encryption modules
 ├── clients/               # Mobile client implementations
 │   ├── android/          # Android client (Kotlin + Jetpack Compose)
 │   └── ios/              # iOS client (Swift + SwiftUI)
 ├── config/                # Configuration files
-│   ├── server.yaml        # Relay server configuration
+│   ├── relay_connections.yaml      # Relay connection configuration
+│   ├── server.yaml        # Server configuration
 │   ├── client.yaml        # Client configuration
 │   └── security.yaml      # Security settings
 ├── tests/                 # Test files
 ├── scripts/               # Setup and utility scripts
+│   ├── test_client_server_auth.py  # Authentication flow tests
+│   ├── test_relay_connections.py   # Relay connection tests
+│   └── test_tor_integration.py     # Tor integration tests
 └── .vscode/              # VS Code/Cursor configuration
 ```
 
@@ -94,17 +104,20 @@ Key environment variables (see `.env` file):
 - `SECIRC_ENCRYPTION_KEY`: Encryption key for private keys
 
 ### Security Features
+- **Multi-challenge authentication**: Cryptographic, proof-of-work, timestamp, and nonce challenges
 - **End-to-end encryption**: Messages encrypted with recipient's public key
-- **Group messaging**: Secure group communication with shared keys
+- **Transparent Tor integration**: Multiple Tor packages with automatic fallback
+- **Group messaging**: Secure group communication with decentralized management
 - **Anonymous routing**: Messages routed through random relay chains
 - **No metadata storage**: Relay servers don't store origin/destination info
 - **Password-protected keys**: Private keys encrypted with strong passwords
 - **Perfect forward secrecy**: Session keys rotated regularly
 - **Traffic analysis resistance**: Dummy traffic and message padding
-- **Censorship resistance**: Distributed relay network
+- **Censorship resistance**: Distributed relay network with Tor support
 - **Anti-MITM protection**: Multi-layer protection against man-in-the-middle attacks
 - **Relay verification**: Comprehensive verification of relay servers
 - **Trust system**: Reputation-based trust management
+- **User status management**: Real-time presence tracking and message delivery
 
 ## 🧪 Testing
 
@@ -129,12 +142,19 @@ pytest tests/test_server.py
 - **asyncio-dgram**: Asynchronous UDP communication
 - **aiohttp**: Asynchronous HTTP client for relay discovery
 - **dnspython**: DNS-based relay discovery
+- **websockets**: WebSocket support for relay connections
 
 ### Security & Cryptography
 - **Cryptography**: Cryptographic recipes and primitives
 - **PyCryptodome**: Additional cryptographic functions
 - **PyNaCl**: Modern cryptographic library
 - **Argon2**: Memory-hard password hashing
+
+### Tor Integration
+- **PySocks**: SOCKS5 proxy support for Tor connections
+- **tor-proxy**: Transparent Tor proxy integration
+- **torpy**: Pure Python Tor protocol implementation
+- **stem**: Tor controller library for advanced management
 
 ### Anonymous Network
 - **requests**: HTTP requests for web discovery
@@ -186,26 +206,35 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🛡️ How It Works
 
+### Client-Server Architecture
+1. **Client Authentication**: Multi-challenge authentication with cryptographic verification
+2. **Server Management**: User status tracking and message delivery coordination
+3. **Shared Protocols**: Common authentication and communication protocols
+4. **Relay Integration**: Server connects to relay network for message distribution
+
 ### Anonymous Messaging Protocol
 1. **User Identity**: Each user has a unique ID and cryptographic keypair
-2. **Message Encryption**: Messages encrypted with recipient's public key
-3. **Group Messaging**: Secure group communication with shared encryption keys
-4. **Relay Discovery**: System discovers relay servers via torrent-inspired DHT and trackers
-5. **Message Routing**: Messages routed through random chain of relay servers
-6. **No Metadata**: Relay servers don't store origin/destination information
-7. **Decryption**: Only recipient can decrypt messages with their private key
-8. **Group Decryption**: Group members decrypt shared group key, then decrypt messages
+2. **Authentication**: Multi-challenge authentication (cryptographic, proof-of-work, timestamp, nonce)
+3. **Message Encryption**: Messages encrypted with recipient's public key
+4. **Group Messaging**: Secure group communication with decentralized management
+5. **Relay Discovery**: System discovers relay servers via torrent-inspired DHT and trackers
+6. **Message Routing**: Messages routed through random chain of relay servers
+7. **No Metadata**: Relay servers don't store origin/destination information
+8. **Decryption**: Only recipient can decrypt messages with their private key
+9. **User Status**: Real-time presence tracking and message delivery
 
 ### Censorship Resistance
 - **Distributed Network**: No single point of failure
 - **Relay Chains**: Messages pass through multiple servers
-- **UDP Protocol**: Harder to block than TCP connections
+- **Multi-Protocol Support**: TCP, Tor, and WebSocket connections
+- **Transparent Tor Integration**: Multiple Tor packages with automatic fallback
 - **Dynamic Discovery**: New relay servers can be added automatically
 - **Traffic Obfuscation**: Dummy traffic and message padding
 - **Mesh Network**: First ring of trusted relays with automatic expansion
 - **Torrent Discovery**: DHT and tracker-based relay discovery
 
 ### Security Features
+- **Multi-Challenge Authentication**: Cryptographic, proof-of-work, timestamp, and nonce challenges
 - **End-to-End Encryption**: Only sender and recipient can read messages
 - **Group Encryption**: Shared group keys encrypted with each member's public key
 - **Perfect Forward Secrecy**: Compromised keys don't affect past messages
@@ -216,6 +245,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Key Rotation**: Automatic key rotation for groups and relays
 - **Relay Verification**: Comprehensive verification of relay servers
 - **Anti-MITM Protection**: Multi-layer protection against attacks
+- **User Status Management**: Real-time presence tracking and secure message delivery
 
 ## 📨 Group Messaging System
 
@@ -280,3 +310,54 @@ message_id = await pubsub_server.publish_message(
 ```
 
 For detailed information, see [PubSub Group Messaging Documentation](docs/PUBSUB_GROUP_MESSAGING.md).
+
+## 🔐 Authentication System
+
+### Multi-Challenge Authentication
+
+secIRC implements a robust multi-challenge authentication system that ensures secure client-server communication:
+
+#### **Challenge Types**
+1. **Cryptographic Challenge**: Requires user's private key to sign challenge data
+2. **Proof of Work Challenge**: Requires computational work to solve (configurable difficulty)
+3. **Timestamp Challenge**: Prevents replay attacks with time validation
+4. **Nonce Challenge**: Ensures session uniqueness with random values
+
+#### **Authentication Flow**
+```
+Client                    Server
+  |                         |
+  |---- Auth Request ------>|
+  |<--- Auth Challenges ----|
+  |---- Auth Responses ---->|
+  |<--- Auth Success -------|
+  |                         |
+  |---- User Online ------->|
+  |<--- Status Confirmed ---|
+```
+
+#### **Security Benefits**
+- **Multi-layer verification**: Multiple independent challenges
+- **Replay attack prevention**: Timestamp and nonce validation
+- **Computational security**: Proof of work requirements
+- **Cryptographic security**: Digital signature verification
+- **Session management**: Automatic cleanup and expiration
+
+### User Status Management
+
+The system provides comprehensive user status management:
+
+#### **Status Types**
+- **Online**: User is active and available
+- **Away**: User is inactive but reachable
+- **Busy**: User is active but not available
+- **Invisible**: User is online but appears offline
+- **Offline**: User is not connected
+
+#### **Message Delivery**
+- **Online users**: Immediate message delivery
+- **Offline users**: Message queuing with retry mechanism
+- **Status updates**: Real-time presence broadcasting
+- **Auto-away**: Automatic status changes based on activity
+
+For detailed information, see [Authentication Documentation](docs/AUTHENTICATION.md).

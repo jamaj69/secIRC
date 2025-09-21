@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>secIRC - Anonymous Censorship-Resistant Messaging</title>
-    <meta name="description" content="secIRC is a completely anonymous, censorship-resistant messaging system using UDP with relay servers. End-to-end encrypted with no metadata storage.">
-    <meta name="keywords" content="anonymous messaging, censorship resistant, encrypted chat, secure communication, privacy, IRC, UDP, relay servers">
+    <meta name="description" content="secIRC is a completely anonymous, censorship-resistant messaging system with multi-challenge authentication, transparent Tor integration, and distributed relay network. End-to-end encrypted with no metadata storage.">
+    <meta name="keywords" content="anonymous messaging, censorship resistant, encrypted chat, secure communication, privacy, IRC, UDP, relay servers, Tor integration, multi-challenge authentication, client-server architecture">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
@@ -32,11 +32,11 @@
         <section class="hero">
             <div class="hero-container">
                 <div class="hero-content">
-                    <h1 class="hero-title">Anonymous Censorship-Resistant Messaging</h1>
+                    <h1 class="hero-title">Advanced Anonymous Messaging with Multi-Challenge Authentication</h1>
                     <p class="hero-description">
-                        secIRC is a completely anonymous messaging system that bypasses any kind of censorship 
-                        through its distributed relay network. Messages are end-to-end encrypted and relay servers 
-                        don't store metadata about origin or destination.
+                        secIRC is a completely anonymous messaging system with separated client-server architecture, 
+                        multi-challenge authentication, and transparent Tor integration. Bypasses any kind of censorship 
+                        through its distributed relay network with end-to-end encryption and no metadata storage.
                     </p>
                     <div class="hero-buttons">
                         <a href="#download" class="btn btn-primary">Get Started</a>
@@ -65,8 +65,13 @@
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon">🔐</div>
-                        <h3>End-to-End Encryption</h3>
-                        <p>Messages are encrypted with recipient's public key. Only the recipient can decrypt with their private key.</p>
+                        <h3>Multi-Challenge Authentication</h3>
+                        <p>Advanced authentication with cryptographic, proof-of-work, timestamp, and nonce challenges for maximum security.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🧅</div>
+                        <h3>Transparent Tor Integration</h3>
+                        <p>Multiple Tor packages with automatic fallback. PySocks, tor-proxy, Torpy, and Stem support.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">👻</div>
@@ -76,7 +81,7 @@
                     <div class="feature-card">
                         <div class="feature-icon">🛡️</div>
                         <h3>Censorship Resistant</h3>
-                        <p>Distributed relay network with no single point of failure. Messages route through random chains.</p>
+                        <p>Distributed relay network with multi-protocol support (TCP, Tor, WebSocket). No single point of failure.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">📱</div>
@@ -87,6 +92,11 @@
                         <div class="feature-icon">🔑</div>
                         <h3>Secure Key Management</h3>
                         <p>Password-protected private keys with automatic rotation. Hardware security module support.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>User Status Management</h3>
+                        <p>Real-time presence tracking, message queuing for offline users, and automatic status updates.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🌐</div>
@@ -104,29 +114,29 @@
                     <div class="step">
                         <div class="step-number">1</div>
                         <div class="step-content">
-                            <h3>Generate Identity</h3>
-                            <p>Create a cryptographic keypair and generate a unique hash identifier. No personal information required.</p>
+                            <h3>Multi-Challenge Authentication</h3>
+                            <p>Client authenticates with server using cryptographic, proof-of-work, timestamp, and nonce challenges for maximum security.</p>
                         </div>
                     </div>
                     <div class="step">
                         <div class="step-number">2</div>
                         <div class="step-content">
-                            <h3>Discover Relays</h3>
-                            <p>Use BitTorrent-inspired DHT and trackers to find relay servers in the distributed network.</p>
+                            <h3>User Status Management</h3>
+                            <p>Server tracks user presence and broadcasts online status to relay network for message delivery coordination.</p>
                         </div>
                     </div>
                     <div class="step">
                         <div class="step-number">3</div>
                         <div class="step-content">
-                            <h3>Send Messages</h3>
-                            <p>Encrypt messages with recipient's public key and route through random relay chains.</p>
+                            <h3>Encrypt & Route</h3>
+                            <p>Messages are encrypted with recipient's public key and routed through multi-protocol relay network (TCP, Tor, WebSocket).</p>
                         </div>
                     </div>
                     <div class="step">
                         <div class="step-number">4</div>
                         <div class="step-content">
-                            <h3>Receive & Decrypt</h3>
-                            <p>Only the recipient can decrypt messages using their private key. Relays never see the content.</p>
+                            <h3>Deliver & Decrypt</h3>
+                            <p>Messages are delivered to online users immediately or queued for offline users. Only recipient can decrypt with private key.</p>
                         </div>
                     </div>
                 </div>
